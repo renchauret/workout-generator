@@ -1,4 +1,4 @@
-package com.example.workoutgenerator2
+package com.example.workoutgenerator
 
 import org.junit.Test
 

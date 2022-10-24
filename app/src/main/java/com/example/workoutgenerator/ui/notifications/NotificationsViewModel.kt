@@ -1,4 +1,4 @@
-package com.example.workoutgenerator2.ui.notifications
+package com.example.workoutgenerator.ui.notifications
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.workoutgenerator2'
+    namespace 'com.example.workoutgenerator'
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.workoutgenerator2"
+        applicationId "com.example.workoutgenerator"
         minSdk 30
         targetSdk 32
         versionCode 1

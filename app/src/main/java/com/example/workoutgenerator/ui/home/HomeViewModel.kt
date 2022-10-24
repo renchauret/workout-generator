@@ -1,4 +1,4 @@
-package com.example.workoutgenerator2.ui.home
+package com.example.workoutgenerator.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
