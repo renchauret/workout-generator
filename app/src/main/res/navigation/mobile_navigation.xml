@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/navigation_generate"
         android:name="com.chauret.workoutgenerator.ui.generate.GenerateWorkoutFragment"
-        android:label="Generate"
+        android:label="@string/title_generate"
         tools:layout="@layout/fragment_generate_workout" />
 
     <fragment
         android:id="@+id/navigation_history"
         android:name="com.chauret.workoutgenerator.ui.history.HistoryFragment"
-        android:label="History"
+        android:label="@string/title_history"
         tools:layout="@layout/fragment_history" />
 
     <fragment
         android:id="@+id/navigation_movements"
         android:name="com.chauret.workoutgenerator.ui.movement.MovementsFragment"
-        android:label="Exercises"
+        android:label="@string/title_movements"
         tools:layout="@layout/fragment_movements" />
 </navigation>
