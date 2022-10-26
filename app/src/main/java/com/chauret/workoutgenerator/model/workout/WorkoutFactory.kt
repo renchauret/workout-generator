@@ -9,7 +9,8 @@ class WorkoutFactory {
         return Workout(
             guid = UUID.randomUUID(),
             config = config,
-            exercises = createExercises(config, possibleMovements)
+            exercises = createExercises(config, possibleMovements),
+            timestampMillis = System.currentTimeMillis()
         )
     }
 
