@@ -1,10 +1,10 @@
-package com.chauret.workoutgenerator.ui.home
+package com.chauret.workoutgenerator.ui.generate
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel : ViewModel() {
+class GenerateWorkoutViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"

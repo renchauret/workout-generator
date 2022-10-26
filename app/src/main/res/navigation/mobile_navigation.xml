@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_generate">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.chauret.workoutgenerator.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_generate"
+        android:name="com.chauret.workoutgenerator.ui.generate.GenerateWorkoutFragment"
+        android:label="Generate"
+        tools:layout="@layout/fragment_generate_workout" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.chauret.workoutgenerator.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_history"
+        android:name="com.chauret.workoutgenerator.ui.history.HistoryFragment"
+        android:label="History"
+        tools:layout="@layout/fragment_history" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.chauret.workoutgenerator.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_movements"
+        android:name="com.chauret.workoutgenerator.ui.movement.MovementsFragment"
+        android:label="Exercises"
+        tools:layout="@layout/fragment_movements" />
 </navigation>
