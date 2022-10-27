@@ -23,7 +23,7 @@ class MovementsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val notificationsViewModel =
-            ViewModelProvider(this).get(MovementsViewModel::class.java)
+            ViewModelProvider(this)[MovementsViewModel::class.java]
 
         _binding = FragmentMovementsBinding.inflate(inflater, container, false)
         val root: View = binding.root

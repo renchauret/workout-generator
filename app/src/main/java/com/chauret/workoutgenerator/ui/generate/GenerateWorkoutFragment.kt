@@ -4,16 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.chauret.workoutgenerator.R
 import com.chauret.workoutgenerator.databinding.FragmentGenerateWorkoutBinding
+import com.chauret.workoutgenerator.model.movement.Movement
+import com.chauret.workoutgenerator.model.movement.WorkoutConfig
 import com.chauret.workoutgenerator.model.movement.WorkoutType
+import com.chauret.workoutgenerator.model.workout.WorkoutFactory
+import com.chauret.workoutgenerator.storage.MovementsDataStore
+import com.chauret.workoutgenerator.storage.WorkoutTypesDataStore
+import com.chauret.workoutgenerator.ui.workout.WorkoutFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.slider.RangeSlider
-import java.io.ObjectInputStream
-import java.util.*
 
 class GenerateWorkoutFragment : Fragment() {
 
@@ -23,8 +30,6 @@ class GenerateWorkoutFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private val WORKOUT_TYPES_FILENAME = "workout_generator_workout_types"
-
     private var workoutTypes: Set<WorkoutType> = setOf()
 
     override fun onCreateView(
@@ -32,16 +37,16 @@ class GenerateWorkoutFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(GenerateWorkoutViewModel::class.java)
+        val generateWorkoutViewModel =
+            ViewModelProvider(this)[GenerateWorkoutViewModel::class.java]
 
         _binding = FragmentGenerateWorkoutBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val textView: TextView = binding.generateTitle
-//        homeViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
+        val textView: TextView = binding.generateTitle
+        generateWorkoutViewModel.titleText.observe(viewLifecycleOwner) {
+            textView.text = it
+        }
 
         workoutTypes = loadWorkoutTypes()
 
@@ -51,9 +56,11 @@ class GenerateWorkoutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val selectWorkoutTypesChipGroup: ChipGroup = view.findViewById(R.id.selectWorkoutTypesChipGroup)
+        // val selectWorkoutTypesChipGroup: ChipGroup = view.findViewById(R.id.selectWorkoutTypesChipGroup)
+        val selectWorkoutTypesChipGroup: ChipGroup = binding.selectWorkoutTypesChipGroup
         workoutTypes.forEach {
             val workoutTypeChip = Chip(this.context)
+            workoutTypeChip.id = it.id
             workoutTypeChip.text = it.name
             workoutTypeChip.isCheckable = true
             workoutTypeChip.checkedIcon = null
@@ -61,8 +68,27 @@ class GenerateWorkoutFragment : Fragment() {
             selectWorkoutTypesChipGroup.addView(workoutTypeChip)
         }
 
-        val selectExercisesRangeSlider: RangeSlider = view.findViewById(R.id.selectExercisesRangeSlider)
+        // val selectExercisesRangeSlider: RangeSlider = view.findViewById(R.id.selectExercisesRangeSlider)
+        val selectExercisesRangeSlider: RangeSlider = binding.selectExercisesRangeSlider
         selectExercisesRangeSlider.values = listOf(3f, 5f)
+
+        // val generateButton = view.findViewById<Button>(R.id.generateButton)
+        val generateButton: Button = binding.generateButton
+        generateButton.setOnClickListener {
+//            @Override
+//            fun onClick(v: View?) {
+            val workoutConfig = WorkoutConfig(
+                workoutTypes = selectWorkoutTypesChipGroup.checkedChipIds.map { chipId -> workoutTypes.find { it.id == chipId }!! }.toSet(),
+                minExercises = selectExercisesRangeSlider.values[0].toInt(),
+                maxExercises = selectExercisesRangeSlider.values[1].toInt()
+            )
+            val workout = WorkoutFactory.createWorkout(workoutConfig, MovementsDataStore.loadMovements(requireActivity()).toList())
+            val workoutFragment = WorkoutFragment(workout)
+            (it.context as FragmentActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.generateWorkoutFragment, workoutFragment)
+                .commit()
+//            }
+        }
     }
 
     override fun onDestroyView() {
@@ -71,22 +97,10 @@ class GenerateWorkoutFragment : Fragment() {
     }
 
     private fun loadWorkoutTypes(): Set<WorkoutType> {
-        try {
-            val fis = requireActivity().openFileInput(WORKOUT_TYPES_FILENAME)
-            val ois = ObjectInputStream(fis)
-            val workoutTypes: Set<WorkoutType> = ois.readObject() as Set<WorkoutType>
-            fis.close()
-            ois.close()
-            return workoutTypes
-        } catch (e: Exception) {
-            println("workout_generator_workout_types file not found, creating new")
-        }
-        return setOf(
-            WorkoutType(UUID.randomUUID(), "Chest"),
-            WorkoutType(UUID.randomUUID(), "Shoulders"),
-            WorkoutType(UUID.randomUUID(), "Back"),
-            WorkoutType(UUID.randomUUID(), "Legs"),
-            WorkoutType(UUID.randomUUID(), "Arms")
-        )
+        return WorkoutTypesDataStore.loadWorkoutTypes(requireActivity())
+    }
+
+    private fun loadMovements(): Set<Movement> {
+        return MovementsDataStore.loadMovements(requireActivity())
     }
 }

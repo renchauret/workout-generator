@@ -5,6 +5,8 @@ import java.util.UUID
 
 data class Exercise (
     val guid: UUID,
+    // for Android list adapters
+    val id: Long,
     val movement: Movement,
     val sets: List<Int>
 )

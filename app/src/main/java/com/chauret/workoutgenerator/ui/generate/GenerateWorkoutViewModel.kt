@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 
 class GenerateWorkoutViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    private val _titleText = MutableLiveData<String>().apply {
+        value = "Generate Workout"
     }
-    val text: LiveData<String> = _text
+    val titleText: LiveData<String> = _titleText
 }
