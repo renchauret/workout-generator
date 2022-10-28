@@ -1,19 +1,22 @@
 package com.chauret.workoutgenerator.storage
 
+import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import com.chauret.workoutgenerator.model.movement.Movement
 import com.chauret.workoutgenerator.model.movement.RepUnit
 import com.chauret.workoutgenerator.model.movement.SetStructure
+import java.io.FileOutputStream
 import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 import java.util.*
 
 class MovementsDataStore {
     companion object {
         private val MOVEMENTS_FILENAME = "workout_generator_movements"
 
-        fun loadMovements(fragmentActivity: FragmentActivity): Set<Movement> {
+        fun loadMovements(activity: FragmentActivity): Set<Movement> {
             try {
-                val fis = fragmentActivity.openFileInput(MOVEMENTS_FILENAME)
+                val fis = activity.openFileInput(MOVEMENTS_FILENAME)
                 val ois = ObjectInputStream(fis)
                 val movements: Set<Movement> = ois.readObject() as Set<Movement>
                 fis.close()
@@ -22,8 +25,8 @@ class MovementsDataStore {
             } catch (e: Exception) {
                 println("workout_generator_movements file not found, creating new")
             }
-            val workoutTypes = WorkoutTypesDataStore.loadWorkoutTypes(fragmentActivity)
-            return setOf(
+            val workoutTypes = WorkoutTypesDataStore.loadWorkoutTypes(activity)
+            val movements = setOf(
                 Movement(
                     guid = UUID.randomUUID(),
                     name = "Bench press",
@@ -131,6 +134,22 @@ class MovementsDataStore {
                     )
                 )
             )
+
+            saveMovements(movements, activity)
+            return movements
+        }
+
+        fun saveMovements(movements: Set<Movement>, activity: FragmentActivity) {
+            try {
+                val fos: FileOutputStream =
+                    activity.openFileOutput(MOVEMENTS_FILENAME, Context.MODE_PRIVATE)
+                val oos = ObjectOutputStream(fos)
+                oos.writeObject(movements)
+                oos.close()
+                fos.close()
+            } catch (e: java.lang.Exception) {
+                println("Movements file not found $e")
+            }
         }
     }
 }

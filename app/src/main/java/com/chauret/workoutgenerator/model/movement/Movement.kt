@@ -1,5 +1,6 @@
 package com.chauret.workoutgenerator.model.movement
 
+import java.io.Serializable
 import java.util.UUID
 
 data class Movement (
@@ -12,4 +13,4 @@ data class Movement (
     val maxReps: Int,
     val repUnit: RepUnit,
     val setStructures: Set<SetStructure>
-)
+): Serializable

@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.replace
 import androidx.lifecycle.ViewModelProvider
 import com.chauret.workoutgenerator.R
 import com.chauret.workoutgenerator.databinding.FragmentGenerateWorkoutBinding
@@ -75,8 +76,6 @@ class GenerateWorkoutFragment : Fragment() {
         // val generateButton = view.findViewById<Button>(R.id.generateButton)
         val generateButton: Button = binding.generateButton
         generateButton.setOnClickListener {
-//            @Override
-//            fun onClick(v: View?) {
             val workoutConfig = WorkoutConfig(
                 workoutTypes = selectWorkoutTypesChipGroup.checkedChipIds.map { chipId -> workoutTypes.find { it.id == chipId }!! }.toSet(),
                 minExercises = selectExercisesRangeSlider.values[0].toInt(),
@@ -85,9 +84,8 @@ class GenerateWorkoutFragment : Fragment() {
             val workout = WorkoutFactory.createWorkout(workoutConfig, MovementsDataStore.loadMovements(requireActivity()).toList())
             val workoutFragment = WorkoutFragment(workout)
             (it.context as FragmentActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.generateWorkoutFragment, workoutFragment)
+                .replace(R.id.container, workoutFragment)
                 .commit()
-//            }
         }
     }
 

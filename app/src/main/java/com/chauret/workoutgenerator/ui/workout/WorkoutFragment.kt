@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.chauret.workoutgenerator.controllers.ExercisesAdapter
-import com.chauret.workoutgenerator.databinding.FragmentMovementsBinding
 import com.chauret.workoutgenerator.databinding.FragmentViewWorkoutBinding
 import com.chauret.workoutgenerator.model.workout.Workout
 

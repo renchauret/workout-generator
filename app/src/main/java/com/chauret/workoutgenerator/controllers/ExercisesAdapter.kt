@@ -29,7 +29,7 @@ class ExercisesAdapter(
     override fun getView(index: Int, nullableView: View?, parent: ViewGroup?): View {
         val view = nullableView
             ?: (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
-                .inflate(R.layout.exercise_list_item, parent)
+                .inflate(R.layout.exercise_list_item, null)
         val exercise = exercises[index]
 
         // Handle TextView and display string from your list
