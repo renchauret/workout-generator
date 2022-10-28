@@ -13,13 +13,15 @@ import com.chauret.workoutgenerator.controllers.ExercisesAdapter
 import com.chauret.workoutgenerator.databinding.FragmentViewWorkoutBinding
 import com.chauret.workoutgenerator.model.workout.Workout
 
-class WorkoutFragment(private val workout: Workout) : Fragment() {
+class WorkoutFragment() : Fragment() {
 
     private var _binding: FragmentViewWorkoutBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private lateinit var workout: Workout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +33,8 @@ class WorkoutFragment(private val workout: Workout) : Fragment() {
 
         _binding = FragmentViewWorkoutBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        workout = arguments?.get("workout") as Workout
 
 //        val textView: TextView = binding.
 //        workoutViewModel.text.observe(viewLifecycleOwner) {

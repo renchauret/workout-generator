@@ -19,7 +19,13 @@
 
     <fragment
         android:id="@+id/navigation_movements"
-        android:name="com.chauret.workoutgenerator.ui.movement.WorkoutFragment"
+        android:name="com.chauret.workoutgenerator.ui.movement.MovementsFragment"
         android:label="@string/title_movements"
         tools:layout="@layout/fragment_movements" />
+
+    <fragment
+        android:id="@+id/navigation_workout"
+        android:name="com.chauret.workoutgenerator.ui.workout.WorkoutFragment"
+        android:label="@string/title_workout"
+        tools:layout="@layout/fragment_view_workout" />
 </navigation>

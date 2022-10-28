@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.replace
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.chauret.workoutgenerator.R
 import com.chauret.workoutgenerator.databinding.FragmentGenerateWorkoutBinding
 import com.chauret.workoutgenerator.model.movement.Movement
@@ -18,7 +18,6 @@ import com.chauret.workoutgenerator.model.movement.WorkoutType
 import com.chauret.workoutgenerator.model.workout.WorkoutFactory
 import com.chauret.workoutgenerator.storage.MovementsDataStore
 import com.chauret.workoutgenerator.storage.WorkoutTypesDataStore
-import com.chauret.workoutgenerator.ui.workout.WorkoutFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.slider.RangeSlider
@@ -82,10 +81,15 @@ class GenerateWorkoutFragment : Fragment() {
                 maxExercises = selectExercisesRangeSlider.values[1].toInt()
             )
             val workout = WorkoutFactory.createWorkout(workoutConfig, MovementsDataStore.loadMovements(requireActivity()).toList())
-            val workoutFragment = WorkoutFragment(workout)
-            (it.context as FragmentActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.container, workoutFragment)
-                .commit()
+            val bundle = bundleOf("workout" to workout)
+            findNavController().navigate(
+                R.id.navigation_workout,
+                bundle
+            )
+//            val workoutFragment = WorkoutFragment(workout)
+//            (it.context as FragmentActivity).supportFragmentManager.beginTransaction()
+//                .replace(R.id.container, workoutFragment)
+//                .commit()
         }
     }
 
