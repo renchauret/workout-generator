@@ -9,7 +9,11 @@
         android:id="@+id/navigation_generate"
         android:name="com.chauret.workoutgenerator.ui.generate.GenerateWorkoutFragment"
         android:label="@string/title_generate"
-        tools:layout="@layout/fragment_generate_workout" />
+        tools:layout="@layout/fragment_generate_workout" >
+        <action
+            android:id="@+id/action_navigation_generate_to_navigation_workout"
+            app:destination="@id/navigation_workout" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_history"

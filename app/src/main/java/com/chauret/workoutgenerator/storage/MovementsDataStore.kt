@@ -8,7 +8,7 @@ import com.chauret.workoutgenerator.model.movement.SetStructure
 import java.io.FileOutputStream
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
-import java.util.*
+import java.util.UUID
 
 class MovementsDataStore {
     companion object {
