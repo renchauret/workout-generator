@@ -20,7 +20,7 @@ class WorkoutsDataStore {
                 ois.close()
                 return workouts
             } catch (e: Exception) {
-                println("workout_generator_workout_types file not found, creating new")
+                println("workout_generator_workouts file not found, creating new")
             }
             val workouts = setOf<Workout>()
             saveWorkouts(workouts, activity)

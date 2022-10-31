@@ -50,13 +50,15 @@ class WorkoutFragment() : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val workoutTitle: TextView = binding.workoutTitle // requireView().findViewById(R.id.workoutTitle)
-        workoutTitle.text = workout.timestampMillis.toString()
+        super.onViewCreated(view, savedInstanceState)
 
-        val workoutTypes: TextView = binding.workoutTypes // requireView().findViewById(R.id.workoutTypes)
+        val workoutTitle: TextView = binding.workoutTitle
+        workoutTitle.text = workout.getDateTime()
+
+        val workoutTypes: TextView = binding.workoutTypes
         workoutTypes.text = workout.config.workoutTypes.joinToString(", ")
 
-        val exercisesList: ListView = binding.exercisesList // requireView().findViewById(R.id.exercisesList)
+        val exercisesList: ListView = binding.exercisesList
         val exercisesAdapter = this.context?.let { ExercisesAdapter(it, workout.exercises) }
         exercisesList.adapter = exercisesAdapter
         (exercisesAdapter as BaseAdapter).notifyDataSetChanged()

@@ -2,11 +2,24 @@ package com.chauret.workoutgenerator.model.workout
 
 import com.chauret.workoutgenerator.model.movement.WorkoutConfig
 import java.io.Serializable
-import java.util.UUID
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class Workout (
     val guid: UUID,
+    // for Android list adapters
+    val id: Long,
     val config: WorkoutConfig,
     val exercises: List<Exercise>,
     val timestampMillis: Long
-): Serializable
+): Serializable {
+    fun getDateTime(): String? {
+        return try {
+            val sdf = SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.US)
+            val netDate = Date(timestampMillis)
+            sdf.format(netDate)
+        } catch (e: Exception) {
+            e.toString()
+        }
+    }
+}

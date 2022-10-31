@@ -3,12 +3,14 @@ package com.chauret.workoutgenerator.model.workout
 import com.chauret.workoutgenerator.model.movement.Movement
 import com.chauret.workoutgenerator.model.movement.WorkoutConfig
 import java.util.UUID
+import kotlin.random.Random
 
 class WorkoutFactory {
     companion object {
         fun createWorkout(config: WorkoutConfig, possibleMovements: List<Movement>): Workout {
             return Workout(
                 guid = UUID.randomUUID(),
+                id = Random.nextLong(0, Long.MAX_VALUE),
                 config = config,
                 exercises = createExercises(config, possibleMovements),
                 timestampMillis = System.currentTimeMillis()
