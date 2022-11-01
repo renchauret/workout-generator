@@ -19,7 +19,11 @@
         android:id="@+id/navigation_history"
         android:name="com.chauret.workoutgenerator.ui.history.HistoryFragment"
         android:label="@string/title_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_navigation_history_to_navigation_workout"
+            app:destination="@id/navigation_workout" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_movements"
@@ -31,5 +35,5 @@
         android:id="@+id/navigation_workout"
         android:name="com.chauret.workoutgenerator.ui.workout.WorkoutFragment"
         android:label="@string/title_workout"
-        tools:layout="@layout/fragment_view_workout" />
+        tools:layout="@layout/fragment_workout" />
 </navigation>

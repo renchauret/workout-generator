@@ -9,7 +9,7 @@
     android:id="@+id/exerciseListItem"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.generate.GenerateWorkoutFragment"
+    tools:context=".ui.workout.WorkoutFragment"
     android:paddingBottom="8dp" >
 
     <TextView

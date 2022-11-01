@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import com.chauret.workoutgenerator.R
-import com.chauret.workoutgenerator.model.workout.Exercise
 import com.chauret.workoutgenerator.model.workout.Workout
 
 class WorkoutsAdapter(
@@ -39,16 +40,14 @@ class WorkoutsAdapter(
         val workoutTypesTextView = view.findViewById<TextView>(R.id.workoutTypes)
         workoutTypesTextView.text = workout.config.workoutTypes.joinToString(", ")
 
-        return view
-    }
+        view.setOnClickListener {
+            val bundle = bundleOf("workout" to workout, "editable" to false, "deletable" to true)
+            view.findNavController().navigate(
+                R.id.action_navigation_history_to_navigation_workout,
+                bundle
+            )
+        }
 
-    private fun getSetsText(exercise: Exercise): String {
-        var isFlat = true
-        val flatRepCount = exercise.sets[0]
-        val enumeratedSetsText: String = exercise.sets.map {
-            if (isFlat && it != flatRepCount) isFlat = false
-            it
-        }.joinToString(", ")
-        return if (isFlat) "${exercise.sets.size} x $flatRepCount" else enumeratedSetsText
+        return view
     }
 }

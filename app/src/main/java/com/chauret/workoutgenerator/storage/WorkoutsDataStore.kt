@@ -6,6 +6,7 @@ import com.chauret.workoutgenerator.model.workout.Workout
 import java.io.FileOutputStream
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
+import java.util.UUID
 
 class WorkoutsDataStore {
     companion object {
@@ -51,6 +52,14 @@ class WorkoutsDataStore {
             }
             val finalWorkouts: Set<Workout> = (if (found) newWorkouts else newWorkouts + workout).toSet()
             saveWorkouts(finalWorkouts, activity)
+        }
+
+        fun deleteWorkout(workoutGuid: UUID, activity: FragmentActivity) {
+            val workouts = loadWorkouts(activity)
+            val newWorkouts = workouts.filter {
+                it.guid != workoutGuid
+            }.toSet()
+            saveWorkouts(newWorkouts, activity)
         }
     }
 }

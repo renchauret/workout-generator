@@ -8,30 +8,26 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.chauret.workoutgenerator.R
 import com.chauret.workoutgenerator.controllers.ExercisesAdapter
-import com.chauret.workoutgenerator.databinding.FragmentViewWorkoutBinding
-import com.chauret.workoutgenerator.model.movement.WorkoutConfig
+import com.chauret.workoutgenerator.databinding.FragmentWorkoutBinding
 import com.chauret.workoutgenerator.model.workout.Workout
-import com.chauret.workoutgenerator.model.workout.WorkoutFactory
-import com.chauret.workoutgenerator.storage.MovementsDataStore
 import com.chauret.workoutgenerator.storage.WorkoutsDataStore
 
 //class WorkoutFragment(val workout: Workout) : Fragment() {
-class WorkoutFragment() : Fragment() {
+class WorkoutFragment : Fragment() {
 
-    private var _binding: FragmentViewWorkoutBinding? = null
+    private var _binding: FragmentWorkoutBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
     private lateinit var workout: Workout
+    private var editable: Boolean = false
+    private var deletable: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,10 +37,12 @@ class WorkoutFragment() : Fragment() {
         val workoutViewModel =
             ViewModelProvider(this)[WorkoutViewModel::class.java]
 
-        _binding = FragmentViewWorkoutBinding.inflate(inflater, container, false)
+        _binding = FragmentWorkoutBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         workout = arguments?.get("workout") as Workout
+        editable = arguments?.get("editable") as Boolean
+        deletable = arguments?.get("deletable") as Boolean
 
         return root
     }
@@ -64,11 +62,24 @@ class WorkoutFragment() : Fragment() {
         (exercisesAdapter as BaseAdapter).notifyDataSetChanged()
 
         val confirmButton: Button = binding.confirmButton
-        confirmButton.setOnClickListener {
-            WorkoutsDataStore.saveWorkout(workout, requireActivity())
-            findNavController().navigateUp()
-        }
+        val deleteButton: Button = binding.deleteButton
         val cancelButton: Button = binding.cancelButton
+        if (editable) {
+            confirmButton.setOnClickListener {
+                WorkoutsDataStore.saveWorkout(workout, requireActivity())
+                findNavController().navigateUp()
+            }
+        } else {
+            confirmButton.visibility = View.GONE
+        }
+        if (deletable) {
+            deleteButton.setOnClickListener {
+                WorkoutsDataStore.deleteWorkout(workout.guid, requireActivity())
+                findNavController().navigateUp()
+            }
+        } else {
+            deleteButton.visibility = View.GONE
+        }
         cancelButton.setOnClickListener {
             findNavController().navigateUp()
         }
