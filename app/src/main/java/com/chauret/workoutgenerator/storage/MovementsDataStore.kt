@@ -9,6 +9,7 @@ import java.io.FileOutputStream
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.util.UUID
+import kotlin.random.Random
 
 class MovementsDataStore {
     companion object {
@@ -29,6 +30,7 @@ class MovementsDataStore {
             val movements = setOf(
                 Movement(
                     guid = UUID.randomUUID(),
+                    id = Random.nextLong(0, Long.MAX_VALUE),
                     name = "Bench press",
                     workoutTypes = setOf(
                         workoutTypes.find { it.name == "Chest" }!!,
@@ -48,6 +50,7 @@ class MovementsDataStore {
                 ),
                 Movement(
                     guid = UUID.randomUUID(),
+                    id = Random.nextLong(0, Long.MAX_VALUE),
                     name = "Shoulder press",
                     workoutTypes = setOf(
                         workoutTypes.find { it.name == "Shoulders" }!!,
@@ -66,6 +69,7 @@ class MovementsDataStore {
                 ),
                 Movement(
                     guid = UUID.randomUUID(),
+                    id = Random.nextLong(0, Long.MAX_VALUE),
                     name = "Squat",
                     workoutTypes = setOf(
                         workoutTypes.find { it.name == "Legs" }!!
@@ -83,6 +87,7 @@ class MovementsDataStore {
                 ),
                 Movement(
                     guid = UUID.randomUUID(),
+                    id = Random.nextLong(0, Long.MAX_VALUE),
                     name = "EZ Bar Curls",
                     workoutTypes = setOf(
                         workoutTypes.find { it.name == "Arms" }!!
@@ -100,6 +105,7 @@ class MovementsDataStore {
                 ),
                 Movement(
                     guid = UUID.randomUUID(),
+                    id = Random.nextLong(0, Long.MAX_VALUE),
                     name = "Triceps extensions",
                     workoutTypes = setOf(
                         workoutTypes.find { it.name == "Arms" }!!
@@ -118,6 +124,7 @@ class MovementsDataStore {
                 ),
                 Movement(
                     guid = UUID.randomUUID(),
+                    id = Random.nextLong(0, Long.MAX_VALUE),
                     name = "Pull ups",
                     workoutTypes = setOf(
                         workoutTypes.find { it.name == "Back" }!!,
@@ -139,7 +146,7 @@ class MovementsDataStore {
             return movements
         }
 
-        fun saveMovements(movements: Set<Movement>, activity: FragmentActivity) {
+        private fun saveMovements(movements: Set<Movement>, activity: FragmentActivity) {
             try {
                 val fos: FileOutputStream =
                     activity.openFileOutput(MOVEMENTS_FILENAME, Context.MODE_PRIVATE)
@@ -150,6 +157,27 @@ class MovementsDataStore {
             } catch (e: java.lang.Exception) {
                 println("Movements file not found $e")
             }
+        }
+
+        fun saveMovement(movement: Movement, activity: FragmentActivity) {
+            val movements = loadMovements(activity)
+            var found = false
+            val newMovements = movements.map {
+                if (movement.guid == it.guid) {
+                    found = true
+                    movement
+                } else it
+            }
+            val finalMovements: Set<Movement> = (if (found) newMovements else newMovements + movement).toSet()
+            saveMovements(finalMovements, activity)
+        }
+
+        fun deleteMovement(movementGuid: UUID, activity: FragmentActivity) {
+            val movements = loadMovements(activity)
+            val newMovements = movements.filter {
+                it.guid != movementGuid
+            }.toSet()
+            saveMovements(newMovements, activity)
         }
     }
 }

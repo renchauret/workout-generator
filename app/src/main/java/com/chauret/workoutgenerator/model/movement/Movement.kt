@@ -5,6 +5,8 @@ import java.util.UUID
 
 data class Movement (
     val guid: UUID,
+    // for Android UI
+    val id: Long,
     val name: String,
     val workoutTypes: Set<WorkoutType>,
     val minSets: Int,
