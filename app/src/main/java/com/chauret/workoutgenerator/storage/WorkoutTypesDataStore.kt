@@ -11,7 +11,7 @@ import kotlin.random.Random
 
 class WorkoutTypesDataStore {
     companion object {
-        private val WORKOUT_TYPES_FILENAME = "workout_generator_workout_types"
+        private const val WORKOUT_TYPES_FILENAME = "workout_generator_workout_types"
 
         fun loadWorkoutTypes(activity: FragmentActivity): Set<WorkoutType> {
             try {

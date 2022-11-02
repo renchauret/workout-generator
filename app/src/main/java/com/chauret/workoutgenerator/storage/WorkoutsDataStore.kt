@@ -10,7 +10,7 @@ import java.util.UUID
 
 class WorkoutsDataStore {
     companion object {
-        private val WORKOUTS_FILENAME = "workout_generator_workouts"
+        private const val WORKOUTS_FILENAME = "workout_generator_workouts"
 
         fun loadWorkouts(activity: FragmentActivity): Set<Workout> {
             try {

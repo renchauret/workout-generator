@@ -13,7 +13,7 @@ import kotlin.random.Random
 
 class MovementsDataStore {
     companion object {
-        private val MOVEMENTS_FILENAME = "workout_generator_movements"
+        private const val MOVEMENTS_FILENAME = "workout_generator_movements"
 
         fun loadMovements(activity: FragmentActivity): Set<Movement> {
             try {

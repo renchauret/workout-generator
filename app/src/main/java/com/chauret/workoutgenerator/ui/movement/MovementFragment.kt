@@ -95,6 +95,7 @@ class MovementFragment : Fragment() {
         if (editable) {
             confirmButton.setOnClickListener {
                 val movement = movement.copy (
+                    name = movementName.text.toString(),
                     workoutTypes = selectWorkoutTypesChipGroup.checkedChipIds.map { chipId -> workoutTypes.find { it.id == chipId }!! }.toSet(),
                     setStructures = selectSetStructuresChipGroup.checkedChipIds.map { chipId -> SetStructure.values()[chipId] }.toSet(),
                     minSets = setCountRangeSlider.values[0].toInt(),
