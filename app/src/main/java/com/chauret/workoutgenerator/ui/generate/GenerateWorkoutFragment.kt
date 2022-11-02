@@ -56,7 +56,6 @@ class GenerateWorkoutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // val selectWorkoutTypesChipGroup: ChipGroup = view.findViewById(R.id.selectWorkoutTypesChipGroup)
         val selectWorkoutTypesChipGroup: ChipGroup = binding.selectWorkoutTypesChipGroup
         workoutTypes.forEach {
             val workoutTypeChip = Chip(this.context)
@@ -67,6 +66,8 @@ class GenerateWorkoutFragment : Fragment() {
             workoutTypeChip.chipBackgroundColor
             selectWorkoutTypesChipGroup.addView(workoutTypeChip)
         }
+        selectWorkoutTypesChipGroup.isSelectionRequired = true
+        selectWorkoutTypesChipGroup.check(workoutTypes.first().id)
 
         val selectExercisesRangeSlider: RangeSlider = binding.selectExercisesRangeSlider
         selectExercisesRangeSlider.values = listOf(3f, 5f)

@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import com.chauret.workoutgenerator.R
 import com.chauret.workoutgenerator.model.movement.Movement
 
@@ -37,6 +39,14 @@ class MovementsAdapter(
         // Handle TextView and display string from your list
         val workoutTypesTextView = view.findViewById<TextView>(R.id.workoutTypes)
         workoutTypesTextView.text = movement.workoutTypes.joinToString(", ")
+
+        view.setOnClickListener {
+            val bundle = bundleOf("movement" to movement, "editable" to true, "deletable" to true)
+            view.findNavController().navigate(
+                R.id.action_navigation_movements_to_navigation_movement,
+                bundle
+            )
+        }
 
         return view
     }

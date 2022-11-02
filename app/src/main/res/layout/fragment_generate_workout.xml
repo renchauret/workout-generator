@@ -37,6 +37,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/generateTitle" />
 
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/selectWorkoutTypesChipGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectWorkoutTypesText" />
+
     <TextView
         android:id="@+id/selectExercisesRangeText"
         android:layout_width="match_parent"
@@ -49,15 +58,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectWorkoutTypesChipGroup" />
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/selectWorkoutTypesChipGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectWorkoutTypesText" />
 
     <com.google.android.material.slider.RangeSlider
         android:id="@+id/selectExercisesRangeSlider"

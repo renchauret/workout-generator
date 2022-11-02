@@ -27,13 +27,23 @@
 
     <fragment
         android:id="@+id/navigation_movements"
-        android:name="com.chauret.workoutgenerator.ui.movement.MovementsFragment"
+        android:name="com.chauret.workoutgenerator.ui.movementlist.MovementListFragment"
         android:label="@string/title_movements"
-        tools:layout="@layout/fragment_movements" />
+        tools:layout="@layout/fragment_movement_list" >
+        <action
+            android:id="@+id/action_navigation_movements_to_navigation_movement"
+            app:destination="@id/navigation_movement" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_workout"
         android:name="com.chauret.workoutgenerator.ui.workout.WorkoutFragment"
         android:label="@string/title_workout"
         tools:layout="@layout/fragment_workout" />
+
+    <fragment
+        android:id="@+id/navigation_movement"
+        android:name="com.chauret.workoutgenerator.ui.movement.MovementFragment"
+        android:label="@string/title_movement"
+        tools:layout="@layout/fragment_movement" />
 </navigation>

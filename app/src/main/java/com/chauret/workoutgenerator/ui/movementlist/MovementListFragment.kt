@@ -1,4 +1,4 @@
-package com.chauret.workoutgenerator.ui.movement
+package com.chauret.workoutgenerator.ui.movementlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,12 +9,12 @@ import android.widget.ListView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.chauret.workoutgenerator.controllers.MovementsAdapter
-import com.chauret.workoutgenerator.databinding.FragmentMovementsBinding
+import com.chauret.workoutgenerator.databinding.FragmentMovementListBinding
 import com.chauret.workoutgenerator.storage.MovementsDataStore
 
-class MovementsFragment : Fragment() {
+class MovementListFragment : Fragment() {
 
-    private var _binding: FragmentMovementsBinding? = null
+    private var _binding: FragmentMovementListBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -26,9 +26,9 @@ class MovementsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val notificationsViewModel =
-            ViewModelProvider(this)[MovementsViewModel::class.java]
+            ViewModelProvider(this)[MovementListViewModel::class.java]
 
-        _binding = FragmentMovementsBinding.inflate(inflater, container, false)
+        _binding = FragmentMovementListBinding.inflate(inflater, container, false)
 
         return binding.root
     }
