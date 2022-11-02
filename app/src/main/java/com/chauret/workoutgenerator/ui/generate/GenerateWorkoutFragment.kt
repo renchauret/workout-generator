@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -26,8 +27,7 @@ class GenerateWorkoutFragment : Fragment() {
 
     private var _binding: FragmentGenerateWorkoutBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
     private var workoutTypes: Set<WorkoutType> = setOf()
@@ -58,12 +58,13 @@ class GenerateWorkoutFragment : Fragment() {
 
         val selectWorkoutTypesChipGroup: ChipGroup = binding.selectWorkoutTypesChipGroup
         workoutTypes.forEach {
-            val workoutTypeChip = Chip(this.context)
+            val workoutTypeChip = Chip(requireContext())
             workoutTypeChip.id = it.id
             workoutTypeChip.text = it.name
             workoutTypeChip.isCheckable = true
             workoutTypeChip.checkedIcon = null
-            workoutTypeChip.chipBackgroundColor
+            workoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+                R.color.chip_state_list)
             selectWorkoutTypesChipGroup.addView(workoutTypeChip)
         }
         selectWorkoutTypesChipGroup.isSelectionRequired = true
@@ -85,10 +86,6 @@ class GenerateWorkoutFragment : Fragment() {
                 R.id.action_navigation_generate_to_navigation_workout,
                 bundle
             )
-//            val workoutFragment = WorkoutFragment(workout)
-//            (it.context as FragmentActivity).supportFragmentManager.beginTransaction()
-//                .replace(R.id.generateWorkoutFragment, workoutFragment)
-//                .commit()
         }
     }
 

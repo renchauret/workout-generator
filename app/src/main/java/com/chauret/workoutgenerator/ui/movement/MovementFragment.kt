@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.chauret.workoutgenerator.R
 import com.chauret.workoutgenerator.databinding.FragmentMovementBinding
 import com.chauret.workoutgenerator.model.movement.Movement
 import com.chauret.workoutgenerator.model.movement.SetStructure
@@ -64,7 +66,8 @@ class MovementFragment : Fragment() {
             workoutTypeChip.text = it.name
             workoutTypeChip.isCheckable = true
             workoutTypeChip.checkedIcon = null
-            workoutTypeChip.chipBackgroundColor
+            workoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+                R.color.chip_state_list)
             workoutTypeChip.isChecked = movement.workoutTypes.contains(it)
             selectWorkoutTypesChipGroup.addView(workoutTypeChip)
         }
@@ -77,7 +80,8 @@ class MovementFragment : Fragment() {
             setStructureChip.text = setStructure.name[0] + setStructure.name.substring(1).lowercase();
             setStructureChip.isCheckable = true
             setStructureChip.checkedIcon = null
-            setStructureChip.chipBackgroundColor
+            setStructureChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+                R.color.chip_state_list)
             setStructureChip.isChecked = movement.setStructures.contains(setStructure)
             selectSetStructuresChipGroup.addView(setStructureChip)
         }
