@@ -16,7 +16,6 @@ import com.chauret.workoutgenerator.databinding.FragmentWorkoutBinding
 import com.chauret.workoutgenerator.model.workout.Workout
 import com.chauret.workoutgenerator.storage.WorkoutsDataStore
 
-//class WorkoutFragment(val workout: Workout) : Fragment() {
 class WorkoutFragment : Fragment() {
 
     private var _binding: FragmentWorkoutBinding? = null
