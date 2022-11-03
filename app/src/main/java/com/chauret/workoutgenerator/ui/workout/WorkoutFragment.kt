@@ -1,5 +1,7 @@
 package com.chauret.workoutgenerator.ui.workout
 
+import android.R
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +18,12 @@ import com.chauret.workoutgenerator.databinding.FragmentWorkoutBinding
 import com.chauret.workoutgenerator.model.workout.Workout
 import com.chauret.workoutgenerator.storage.WorkoutsDataStore
 
+
 class WorkoutFragment : Fragment() {
 
     private var _binding: FragmentWorkoutBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
     private lateinit var workout: Workout
@@ -73,8 +75,16 @@ class WorkoutFragment : Fragment() {
         }
         if (deletable) {
             deleteButton.setOnClickListener {
-                WorkoutsDataStore.deleteWorkout(workout.guid, requireActivity())
-                findNavController().navigateUp()
+                AlertDialog.Builder(requireContext())
+                    .setMessage("Delete workout from history?")
+                    .setIcon(R.drawable.ic_dialog_alert)
+                    .setPositiveButton(
+                        R.string.yes
+                    ) { _, _ ->
+                        WorkoutsDataStore.deleteWorkout(workout.guid, requireActivity())
+                        findNavController().navigateUp()
+                    }
+                    .setNegativeButton(R.string.no, null).show()
             }
         } else {
             deleteButton.visibility = View.GONE

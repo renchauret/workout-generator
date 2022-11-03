@@ -1,5 +1,6 @@
 package com.chauret.workoutgenerator.ui.movement
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,8 +26,7 @@ class MovementFragment : Fragment() {
 
     private var _binding: FragmentMovementBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
     private lateinit var movement: Movement
@@ -115,8 +115,16 @@ class MovementFragment : Fragment() {
         }
         if (deletable) {
             deleteButton.setOnClickListener {
-                MovementsDataStore.deleteMovement(movement.guid, requireActivity())
-                findNavController().navigateUp()
+                AlertDialog.Builder(requireContext())
+                    .setMessage("Delete \"${movement.name}\"?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(
+                        android.R.string.yes
+                    ) { _, _ ->
+                        MovementsDataStore.deleteMovement(movement.guid, requireActivity())
+                        findNavController().navigateUp()
+                    }
+                    .setNegativeButton(android.R.string.no, null).show()
             }
         } else {
             deleteButton.visibility = View.GONE
