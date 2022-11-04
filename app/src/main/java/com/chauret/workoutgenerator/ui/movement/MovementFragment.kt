@@ -74,7 +74,7 @@ class MovementFragment : Fragment() {
         }
         val addWorkoutTypeChip = Chip(this.context)
         addWorkoutTypeChip.id = Random.nextInt(0, Int.MAX_VALUE)
-        addWorkoutTypeChip.text = "+"
+        addWorkoutTypeChip.text = "+ / -"
         addWorkoutTypeChip.isCheckable = false
         addWorkoutTypeChip.checkedIcon = null
         addWorkoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),

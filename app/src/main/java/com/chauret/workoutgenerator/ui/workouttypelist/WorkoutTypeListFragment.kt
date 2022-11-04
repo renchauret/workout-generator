@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.chauret.workoutgenerator.controllers.WorkoutTypesAdapter
 import com.chauret.workoutgenerator.databinding.FragmentWorkoutTypeListBinding
 import com.chauret.workoutgenerator.model.movement.WorkoutType
@@ -25,6 +26,8 @@ class WorkoutTypeListFragment : Fragment() {
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
+
+    private lateinit var workoutTypes: MutableList<WorkoutType>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,11 +45,16 @@ class WorkoutTypeListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val workoutTypes = WorkoutTypesDataStore.loadWorkoutTypes(requireContext())
+        workoutTypes = WorkoutTypesDataStore.loadWorkoutTypes(requireContext()).toMutableList()
         val workoutTypesList: ListView = binding.workoutTypesList
-        val workoutTypesAdapter = WorkoutTypesAdapter(requireContext(), workoutTypes.toList())
+        val workoutTypesAdapter = WorkoutTypesAdapter(requireContext(), workoutTypes)
         workoutTypesList.adapter = workoutTypesAdapter
-        (workoutTypesAdapter as BaseAdapter).notifyDataSetChanged()
+        (workoutTypesList.adapter as BaseAdapter).notifyDataSetChanged()
+
+        val cancelButton: Button = binding.cancelButton
+        cancelButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         val addButton: Button = binding.addButton
         addButton.setOnClickListener {
@@ -59,15 +67,18 @@ class WorkoutTypeListFragment : Fragment() {
                     android.R.string.yes
                 ) { _, _ ->
                     val name = editText.text.toString()
-                    if (name.length > 0) {
+                    if (name.isNotEmpty()) {
+                        val workoutType = WorkoutType(
+                            guid = UUID.randomUUID(),
+                            id = Random.nextInt(),
+                            name = editText.text.toString()
+                        )
                         WorkoutTypesDataStore.saveWorkoutType(
-                            WorkoutType(
-                                guid = UUID.randomUUID(),
-                                id = Random.nextInt(),
-                                name = editText.text.toString()
-                            ),
+                            workoutType,
                             requireContext()
                         )
+                        workoutTypes.add(workoutType)
+                        (workoutTypesList.adapter as BaseAdapter).notifyDataSetChanged()
                     }
                 }
                 .setNegativeButton(android.R.string.no, null).show()

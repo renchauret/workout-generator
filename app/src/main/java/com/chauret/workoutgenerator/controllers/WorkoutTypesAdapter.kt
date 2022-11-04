@@ -12,7 +12,7 @@ import com.chauret.workoutgenerator.storage.WorkoutTypesDataStore
 
 class WorkoutTypesAdapter(
     private val context: Context,
-    private val workoutTypes: List<WorkoutType>
+    private val workoutTypes: MutableList<WorkoutType>
 ): BaseAdapter(), ListAdapter {
     override fun getCount(): Int {
         return workoutTypes.size
@@ -45,6 +45,8 @@ class WorkoutTypesAdapter(
                     android.R.string.yes
                 ) { _, _ ->
                     WorkoutTypesDataStore.deleteWorkoutType(workoutType.guid, context)
+                    workoutTypes.remove(workoutType)
+                    notifyDataSetChanged()
                 }
                 .setNegativeButton(android.R.string.no, null).show()
         }
