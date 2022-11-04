@@ -1,7 +1,6 @@
 package com.chauret.workoutgenerator.storage
 
 import android.content.Context
-import androidx.fragment.app.FragmentActivity
 import com.chauret.workoutgenerator.model.movement.Movement
 import com.chauret.workoutgenerator.model.movement.RepUnit
 import com.chauret.workoutgenerator.model.movement.SetStructure
@@ -15,9 +14,9 @@ class MovementsDataStore {
     companion object {
         private const val MOVEMENTS_FILENAME = "workout_generator_movements"
 
-        fun loadMovements(activity: FragmentActivity): Set<Movement> {
+        fun loadMovements(context: Context): Set<Movement> {
             try {
-                val fis = activity.openFileInput(MOVEMENTS_FILENAME)
+                val fis = context.openFileInput(MOVEMENTS_FILENAME)
                 val ois = ObjectInputStream(fis)
                 val movements: Set<Movement> = ois.readObject() as Set<Movement>
                 fis.close()
@@ -26,7 +25,7 @@ class MovementsDataStore {
             } catch (e: Exception) {
                 println("workout_generator_movements file not found, creating new")
             }
-            val workoutTypes = WorkoutTypesDataStore.loadWorkoutTypes(activity)
+            val workoutTypes = WorkoutTypesDataStore.loadWorkoutTypes(context)
             val movements = setOf(
                 Movement(
                     guid = UUID.randomUUID(),
@@ -142,14 +141,14 @@ class MovementsDataStore {
                 )
             )
 
-            saveMovements(movements, activity)
+            saveMovements(movements, context)
             return movements
         }
 
-        private fun saveMovements(movements: Set<Movement>, activity: FragmentActivity) {
+        private fun saveMovements(movements: Set<Movement>, context: Context) {
             try {
                 val fos: FileOutputStream =
-                    activity.openFileOutput(MOVEMENTS_FILENAME, Context.MODE_PRIVATE)
+                    context.openFileOutput(MOVEMENTS_FILENAME, Context.MODE_PRIVATE)
                 val oos = ObjectOutputStream(fos)
                 oos.writeObject(movements)
                 oos.close()
@@ -159,8 +158,8 @@ class MovementsDataStore {
             }
         }
 
-        fun saveMovement(movement: Movement, activity: FragmentActivity) {
-            val movements = loadMovements(activity)
+        fun saveMovement(movement: Movement, context: Context) {
+            val movements = loadMovements(context)
             var found = false
             val newMovements = movements.map {
                 if (movement.guid == it.guid) {
@@ -169,15 +168,15 @@ class MovementsDataStore {
                 } else it
             }
             val finalMovements: Set<Movement> = (if (found) newMovements else newMovements + movement).toSet()
-            saveMovements(finalMovements, activity)
+            saveMovements(finalMovements, context)
         }
 
-        fun deleteMovement(movementGuid: UUID, activity: FragmentActivity) {
-            val movements = loadMovements(activity)
+        fun deleteMovement(movementGuid: UUID, context: Context) {
+            val movements = loadMovements(context)
             val newMovements = movements.filter {
                 it.guid != movementGuid
             }.toSet()
-            saveMovements(newMovements, activity)
+            saveMovements(newMovements, context)
         }
     }
 }

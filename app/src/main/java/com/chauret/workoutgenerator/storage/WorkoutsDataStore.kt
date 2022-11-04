@@ -1,7 +1,6 @@
 package com.chauret.workoutgenerator.storage
 
 import android.content.Context
-import androidx.fragment.app.FragmentActivity
 import com.chauret.workoutgenerator.model.workout.Workout
 import java.io.FileOutputStream
 import java.io.ObjectInputStream
@@ -12,9 +11,9 @@ class WorkoutsDataStore {
     companion object {
         private const val WORKOUTS_FILENAME = "workout_generator_workouts"
 
-        fun loadWorkouts(activity: FragmentActivity): Set<Workout> {
+        fun loadWorkouts(context: Context): Set<Workout> {
             try {
-                val fis = activity.openFileInput(WORKOUTS_FILENAME)
+                val fis = context.openFileInput(WORKOUTS_FILENAME)
                 val ois = ObjectInputStream(fis)
                 val workouts: Set<Workout> = ois.readObject() as Set<Workout>
                 fis.close()
@@ -24,14 +23,14 @@ class WorkoutsDataStore {
                 println("workout_generator_workouts file not found, creating new")
             }
             val workouts = setOf<Workout>()
-            saveWorkouts(workouts, activity)
+            saveWorkouts(workouts, context)
             return workouts
         }
 
-        private fun saveWorkouts(workouts: Set<Workout>, activity: FragmentActivity) {
+        private fun saveWorkouts(workouts: Set<Workout>, context: Context) {
             try {
                 val fos: FileOutputStream =
-                    activity.openFileOutput(WORKOUTS_FILENAME, Context.MODE_PRIVATE)
+                    context.openFileOutput(WORKOUTS_FILENAME, Context.MODE_PRIVATE)
                 val oos = ObjectOutputStream(fos)
                 oos.writeObject(workouts)
                 oos.close()
@@ -41,8 +40,8 @@ class WorkoutsDataStore {
             }
         }
 
-        fun saveWorkout(workout: Workout, activity: FragmentActivity) {
-            val workouts = loadWorkouts(activity)
+        fun saveWorkout(workout: Workout, context: Context) {
+            val workouts = loadWorkouts(context)
             var found = false
             val newWorkouts = workouts.map {
                 if (workout.guid == it.guid) {
@@ -51,15 +50,15 @@ class WorkoutsDataStore {
                 } else it
             }
             val finalWorkouts: Set<Workout> = (if (found) newWorkouts else newWorkouts + workout).toSet()
-            saveWorkouts(finalWorkouts, activity)
+            saveWorkouts(finalWorkouts, context)
         }
 
-        fun deleteWorkout(workoutGuid: UUID, activity: FragmentActivity) {
-            val workouts = loadWorkouts(activity)
+        fun deleteWorkout(workoutGuid: UUID, context: Context) {
+            val workouts = loadWorkouts(context)
             val newWorkouts = workouts.filter {
                 it.guid != workoutGuid
             }.toSet()
-            saveWorkouts(newWorkouts, activity)
+            saveWorkouts(newWorkouts, context)
         }
     }
 }

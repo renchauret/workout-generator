@@ -45,5 +45,15 @@
         android:id="@+id/navigation_movement"
         android:name="com.chauret.workoutgenerator.ui.movement.MovementFragment"
         android:label="@string/title_movement"
-        tools:layout="@layout/fragment_movement" />
+        tools:layout="@layout/fragment_movement" >
+        <action
+            android:id="@+id/action_navigation_movement_to_navigation_workout_types"
+            app:destination="@id/navigation_workout_types" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_workout_types"
+        android:name="com.chauret.workoutgenerator.ui.workouttypelist.WorkoutTypeListFragment"
+        android:label="@string/title_workout_types"
+        tools:layout="@layout/fragment_workout_type_list" />
 </navigation>

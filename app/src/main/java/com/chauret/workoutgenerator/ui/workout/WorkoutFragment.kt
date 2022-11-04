@@ -68,7 +68,7 @@ class WorkoutFragment : Fragment() {
         if (editable) {
             confirmButton.setOnClickListener {
                 WorkoutsDataStore.saveWorkout(workout, requireActivity())
-                findNavController().navigateUp()
+                findNavController().popBackStack()
             }
         } else {
             confirmButton.visibility = View.GONE
@@ -82,7 +82,7 @@ class WorkoutFragment : Fragment() {
                         R.string.yes
                     ) { _, _ ->
                         WorkoutsDataStore.deleteWorkout(workout.guid, requireActivity())
-                        findNavController().navigateUp()
+                        findNavController().popBackStack()
                     }
                     .setNegativeButton(R.string.no, null).show()
             }
@@ -90,7 +90,7 @@ class WorkoutFragment : Fragment() {
             deleteButton.visibility = View.GONE
         }
         cancelButton.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
     }
 

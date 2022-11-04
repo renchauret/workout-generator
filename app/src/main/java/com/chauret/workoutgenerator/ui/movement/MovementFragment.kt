@@ -21,6 +21,7 @@ import com.chauret.workoutgenerator.storage.WorkoutTypesDataStore
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.slider.RangeSlider
+import kotlin.random.Random
 
 class MovementFragment : Fragment() {
 
@@ -71,6 +72,19 @@ class MovementFragment : Fragment() {
             workoutTypeChip.isChecked = movement.workoutTypes.contains(it)
             selectWorkoutTypesChipGroup.addView(workoutTypeChip)
         }
+        val addWorkoutTypeChip = Chip(this.context)
+        addWorkoutTypeChip.id = Random.nextInt(0, Int.MAX_VALUE)
+        addWorkoutTypeChip.text = "+"
+        addWorkoutTypeChip.isCheckable = false
+        addWorkoutTypeChip.checkedIcon = null
+        addWorkoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+            R.color.chip_state_list)
+        addWorkoutTypeChip.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_navigation_movement_to_navigation_workout_types
+            )
+        }
+        selectWorkoutTypesChipGroup.addView(addWorkoutTypeChip)
         selectWorkoutTypesChipGroup.isSelectionRequired = true
 
         val selectSetStructuresChipGroup: ChipGroup = binding.selectSetStructuresChipGroup
@@ -108,7 +122,7 @@ class MovementFragment : Fragment() {
                     maxReps = repCountRangeSlider.values[1].toInt()
                 )
                 MovementsDataStore.saveMovement(movement, requireActivity())
-                findNavController().navigateUp()
+                findNavController().popBackStack()
             }
         } else {
             confirmButton.visibility = View.GONE
@@ -122,7 +136,7 @@ class MovementFragment : Fragment() {
                         android.R.string.yes
                     ) { _, _ ->
                         MovementsDataStore.deleteMovement(movement.guid, requireActivity())
-                        findNavController().navigateUp()
+                        findNavController().popBackStack()
                     }
                     .setNegativeButton(android.R.string.no, null).show()
             }
@@ -130,7 +144,7 @@ class MovementFragment : Fragment() {
             deleteButton.visibility = View.GONE
         }
         cancelButton.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
     }
 

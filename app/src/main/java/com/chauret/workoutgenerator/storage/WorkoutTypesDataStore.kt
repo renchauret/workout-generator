@@ -1,7 +1,6 @@
 package com.chauret.workoutgenerator.storage
 
 import android.content.Context
-import androidx.fragment.app.FragmentActivity
 import com.chauret.workoutgenerator.model.movement.WorkoutType
 import java.io.FileOutputStream
 import java.io.ObjectInputStream
@@ -13,9 +12,9 @@ class WorkoutTypesDataStore {
     companion object {
         private const val WORKOUT_TYPES_FILENAME = "workout_generator_workout_types"
 
-        fun loadWorkoutTypes(activity: FragmentActivity): Set<WorkoutType> {
+        fun loadWorkoutTypes(context: Context): Set<WorkoutType> {
             try {
-                val fis = activity.openFileInput(WORKOUT_TYPES_FILENAME)
+                val fis = context.openFileInput(WORKOUT_TYPES_FILENAME)
                 val ois = ObjectInputStream(fis)
                 val workoutTypes: Set<WorkoutType> = ois.readObject() as Set<WorkoutType>
                 fis.close()
@@ -31,14 +30,14 @@ class WorkoutTypesDataStore {
                 WorkoutType(UUID.randomUUID(), Random.nextInt(0, Int.MAX_VALUE), "Legs"),
                 WorkoutType(UUID.randomUUID(), Random.nextInt(0, Int.MAX_VALUE), "Arms")
             )
-            saveWorkoutTypes(workoutTypes, activity)
+            saveWorkoutTypes(workoutTypes, context)
             return workoutTypes
         }
 
-        fun saveWorkoutTypes(workoutTypes: Set<WorkoutType>, activity: FragmentActivity) {
+        private fun saveWorkoutTypes(workoutTypes: Set<WorkoutType>, context: Context) {
             try {
                 val fos: FileOutputStream =
-                    activity.openFileOutput(WORKOUT_TYPES_FILENAME, Context.MODE_PRIVATE)
+                    context.openFileOutput(WORKOUT_TYPES_FILENAME, Context.MODE_PRIVATE)
                 val oos = ObjectOutputStream(fos)
                 oos.writeObject(workoutTypes)
                 oos.close()
@@ -46,6 +45,27 @@ class WorkoutTypesDataStore {
             } catch (e: java.lang.Exception) {
                 println("Workout types file not found $e")
             }
+        }
+
+        fun saveWorkoutType(workoutType: WorkoutType, context: Context) {
+            val workoutTypes = loadWorkoutTypes(context)
+            var found = false
+            val newWorkoutTypes = workoutTypes.map {
+                if (workoutType.guid == it.guid) {
+                    found = true
+                    workoutType
+                } else it
+            }
+            val finalWorkoutTypes: Set<WorkoutType> = (if (found) newWorkoutTypes else newWorkoutTypes + workoutType).toSet()
+            saveWorkoutTypes(finalWorkoutTypes, context)
+        }
+
+        fun deleteWorkoutType(workoutTypeGuid: UUID, context: Context) {
+            val workoutTypes = loadWorkoutTypes(context)
+            val newWorkoutTypes = workoutTypes.filter {
+                it.guid != workoutTypeGuid
+            }.toSet()
+            saveWorkoutTypes(newWorkoutTypes, context)
         }
     }
 }
