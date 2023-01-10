@@ -1,6 +1,7 @@
 package com.chauret.workoutgenerator.ui.movement
 
 import android.app.AlertDialog
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -67,8 +68,11 @@ class MovementFragment : Fragment() {
             workoutTypeChip.text = it.name
             workoutTypeChip.isCheckable = true
             workoutTypeChip.checkedIcon = null
-            workoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
-                R.color.chip_state_list)
+            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {}
+                Configuration.UI_MODE_NIGHT_NO -> workoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+                    R.color.chip_state_list)
+            }
             workoutTypeChip.isChecked = movement.workoutTypes.contains(it)
             selectWorkoutTypesChipGroup.addView(workoutTypeChip)
         }
@@ -77,8 +81,11 @@ class MovementFragment : Fragment() {
         addWorkoutTypeChip.text = "+ / -"
         addWorkoutTypeChip.isCheckable = false
         addWorkoutTypeChip.checkedIcon = null
-        addWorkoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
-            R.color.chip_state_list)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {}
+            Configuration.UI_MODE_NIGHT_NO -> addWorkoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+                R.color.chip_state_list)
+        }
         addWorkoutTypeChip.setOnClickListener {
             findNavController().navigate(
                 R.id.action_navigation_movement_to_navigation_workout_types
@@ -94,8 +101,11 @@ class MovementFragment : Fragment() {
             setStructureChip.text = setStructure.name[0] + setStructure.name.substring(1).lowercase();
             setStructureChip.isCheckable = true
             setStructureChip.checkedIcon = null
-            setStructureChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
-                R.color.chip_state_list)
+            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {}
+                Configuration.UI_MODE_NIGHT_NO -> setStructureChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+                    R.color.chip_state_list)
+            }
             setStructureChip.isChecked = movement.setStructures.contains(setStructure)
             selectSetStructuresChipGroup.addView(setStructureChip)
         }

@@ -1,5 +1,6 @@
 package com.chauret.workoutgenerator.ui.generate
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -63,8 +64,11 @@ class GenerateWorkoutFragment : Fragment() {
             workoutTypeChip.text = it.name
             workoutTypeChip.isCheckable = true
             workoutTypeChip.checkedIcon = null
-            workoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
-                R.color.chip_state_list)
+            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> {}
+                Configuration.UI_MODE_NIGHT_NO -> workoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+                    R.color.chip_state_list)
+            }
             selectWorkoutTypesChipGroup.addView(workoutTypeChip)
         }
         selectWorkoutTypesChipGroup.isSelectionRequired = true
