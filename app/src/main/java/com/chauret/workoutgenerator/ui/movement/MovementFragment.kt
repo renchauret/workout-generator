@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -117,6 +118,12 @@ class MovementFragment : Fragment() {
         val repCountRangeSlider: RangeSlider = binding.repCountRangeSlider
         repCountRangeSlider.values = listOf(movement.minReps.toFloat(), movement.maxReps.toFloat())
 
+        val favoriteCheckbox: CheckBox = binding.favoriteCheckbox
+        favoriteCheckbox.isChecked = movement.favorite ?: false
+//        favoriteCheckbox.setOnClickListener {
+//            favoriteCheckbox.isChecked = !favoriteCheckbox.isChecked
+//        }
+
         val confirmButton: Button = binding.confirmButton
         val deleteButton: Button = binding.deleteButton
         val cancelButton: Button = binding.cancelButton
@@ -129,7 +136,8 @@ class MovementFragment : Fragment() {
                     minSets = setCountRangeSlider.values[0].toInt(),
                     maxSets = setCountRangeSlider.values[1].toInt(),
                     minReps = repCountRangeSlider.values[0].toInt(),
-                    maxReps = repCountRangeSlider.values[1].toInt()
+                    maxReps = repCountRangeSlider.values[1].toInt(),
+                    favorite = favoriteCheckbox.isChecked
                 )
                 MovementsDataStore.saveMovement(movement, requireActivity())
                 findNavController().popBackStack()

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:text="Movement Name"
         android:textAlignment="center"
@@ -178,5 +178,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:strokeColor="@color/purple_500"
         app:strokeWidth="2dp" />
+
+    <CheckBox
+        android:id="@+id/favoriteCheckbox"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="0dp"
+        style="?android:attr/starStyle"
+        app:layout_constraintEnd_toStartOf="@id/deleteButton"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

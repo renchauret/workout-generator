@@ -14,5 +14,6 @@ data class Movement (
     val minReps: Int,
     val maxReps: Int,
     val repUnit: RepUnit,
-    val setStructures: Set<SetStructure>
+    val setStructures: Set<SetStructure>,
+    val favorite: Boolean? = false
 ): Serializable
