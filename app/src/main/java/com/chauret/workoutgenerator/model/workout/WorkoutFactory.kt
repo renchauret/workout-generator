@@ -23,7 +23,15 @@ class WorkoutFactory {
             }.toMutableSet()
             val numExercises = (minOf(config.minExercises, legalMovements.size)..minOf(config.maxExercises, legalMovements.size)).random()
             return (0 until numExercises).map {
-                val movement = legalMovements.random()
+                val weightedIndices = mutableListOf<Int>()
+                legalMovements.forEachIndexed { index, movement ->
+                    // favorite movements are 50% more likely to be picked
+                    if (movement.favorite == true) weightedIndices.add(index)
+                    weightedIndices.add(index)
+                    weightedIndices.add(index)
+                }
+                val index = weightedIndices.random()
+                val movement = legalMovements.elementAt(index)
                 legalMovements.remove(movement)
                 ExerciseFactory.createExercise(movement)
             }
