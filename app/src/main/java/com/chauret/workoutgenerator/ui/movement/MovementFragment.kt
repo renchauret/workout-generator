@@ -120,9 +120,6 @@ class MovementFragment : Fragment() {
 
         val favoriteCheckbox: CheckBox = binding.favoriteCheckbox
         favoriteCheckbox.isChecked = movement.favorite ?: false
-//        favoriteCheckbox.setOnClickListener {
-//            favoriteCheckbox.isChecked = !favoriteCheckbox.isChecked
-//        }
 
         val confirmButton: Button = binding.confirmButton
         val deleteButton: Button = binding.deleteButton
