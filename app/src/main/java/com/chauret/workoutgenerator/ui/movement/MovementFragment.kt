@@ -102,7 +102,7 @@ class MovementFragment : Fragment() {
         SetStructure.values().forEachIndexed { index, setStructure ->
             val setStructureChip = Chip(this.context)
             setStructureChip.id = index
-            setStructureChip.text = setStructure.name[0] + setStructure.name.substring(1).lowercase();
+            setStructureChip.text = setStructure.name[0] + setStructure.name.substring(1).lowercase()
             setStructureChip.isCheckable = true
             setStructureChip.checkedIcon = null
             when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
@@ -123,7 +123,7 @@ class MovementFragment : Fragment() {
         RepUnit.values().forEachIndexed { index, repUnit ->
             val repUnitChip = Chip(this.context)
             repUnitChip.id = index
-            repUnitChip.text = repUnit.name[0] + repUnit.name.substring(1).lowercase();
+            repUnitChip.text = repUnit.name[0] + repUnit.name.substring(1).lowercase()
             repUnitChip.isCheckable = true
             repUnitChip.checkedIcon = null
             when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
@@ -136,6 +136,14 @@ class MovementFragment : Fragment() {
             repUnitChipGroup.addView(repUnitChip)
         }
         repUnitChipGroup.isSelectionRequired = true
+
+        val repCountRangeSliderText: TextView = binding.repCountRangeSliderText
+        val selectedRepUnit = RepUnit.values()[repUnitChipGroup.checkedChipId]
+        repCountRangeSliderText.text = "Min and Max " + selectedRepUnit.name[0] + selectedRepUnit.name.substring(1).lowercase()
+        repUnitChipGroup.setOnCheckedStateChangeListener { group, _ ->
+            val repUnit = RepUnit.values()[group.checkedChipId]
+            repCountRangeSliderText.text = "Min and Max " + repUnit.name[0] + repUnit.name.substring(1).lowercase()
+        }
 
         val repCountRangeSlider: RangeSlider = binding.repCountRangeSlider
         repCountRangeSlider.values = listOf(movement.minReps.toFloat(), movement.maxReps.toFloat())
