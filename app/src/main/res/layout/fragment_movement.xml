@@ -119,6 +119,32 @@
                 app:layout_constraintTop_toBottomOf="@+id/setCountRangeSliderText" />
 
             <TextView
+                android:id="@+id/repUnitChipGroupText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:text="Counter Type"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/setCountRangeSlider" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/repUnitChipGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:selectionRequired="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/repUnitChipGroupText"
+                app:singleSelection="true" />
+
+            <TextView
                 android:id="@+id/repCountRangeSliderText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -129,7 +155,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/setCountRangeSlider" />
+                app:layout_constraintTop_toBottomOf="@+id/repUnitChipGroup" />
 
             <com.google.android.material.slider.RangeSlider
                 android:id="@+id/repCountRangeSlider"

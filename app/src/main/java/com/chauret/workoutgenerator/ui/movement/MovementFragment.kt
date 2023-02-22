@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.chauret.workoutgenerator.R
 import com.chauret.workoutgenerator.databinding.FragmentMovementBinding
 import com.chauret.workoutgenerator.model.movement.Movement
+import com.chauret.workoutgenerator.model.movement.RepUnit
 import com.chauret.workoutgenerator.model.movement.SetStructure
 import com.chauret.workoutgenerator.model.movement.WorkoutType
 import com.chauret.workoutgenerator.storage.MovementsDataStore
@@ -70,7 +71,8 @@ class MovementFragment : Fragment() {
             workoutTypeChip.isCheckable = true
             workoutTypeChip.checkedIcon = null
             when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-                Configuration.UI_MODE_NIGHT_YES -> {}
+                Configuration.UI_MODE_NIGHT_YES -> workoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+                    R.color.chip_state_list_dark)
                 Configuration.UI_MODE_NIGHT_NO -> workoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
                     R.color.chip_state_list)
             }
@@ -83,7 +85,8 @@ class MovementFragment : Fragment() {
         addWorkoutTypeChip.isCheckable = false
         addWorkoutTypeChip.checkedIcon = null
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_YES -> {}
+            Configuration.UI_MODE_NIGHT_YES -> addWorkoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+                R.color.chip_state_list_dark)
             Configuration.UI_MODE_NIGHT_NO -> addWorkoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
                 R.color.chip_state_list)
         }
@@ -103,7 +106,8 @@ class MovementFragment : Fragment() {
             setStructureChip.isCheckable = true
             setStructureChip.checkedIcon = null
             when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-                Configuration.UI_MODE_NIGHT_YES -> {}
+                Configuration.UI_MODE_NIGHT_YES -> setStructureChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+                    R.color.chip_state_list_dark)
                 Configuration.UI_MODE_NIGHT_NO -> setStructureChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
                     R.color.chip_state_list)
             }
@@ -114,6 +118,24 @@ class MovementFragment : Fragment() {
 
         val setCountRangeSlider: RangeSlider = binding.setCountRangeSlider
         setCountRangeSlider.values = listOf(movement.minSets.toFloat(), movement.maxSets.toFloat())
+
+        val repUnitChipGroup: ChipGroup = binding.repUnitChipGroup
+        RepUnit.values().forEachIndexed { index, repUnit ->
+            val repUnitChip = Chip(this.context)
+            repUnitChip.id = index
+            repUnitChip.text = repUnit.name[0] + repUnit.name.substring(1).lowercase();
+            repUnitChip.isCheckable = true
+            repUnitChip.checkedIcon = null
+            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> repUnitChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+                    R.color.chip_state_list_dark)
+                Configuration.UI_MODE_NIGHT_NO -> repUnitChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+                    R.color.chip_state_list)
+            }
+            repUnitChip.isChecked = movement.repUnit == repUnit
+            repUnitChipGroup.addView(repUnitChip)
+        }
+        repUnitChipGroup.isSelectionRequired = true
 
         val repCountRangeSlider: RangeSlider = binding.repCountRangeSlider
         repCountRangeSlider.values = listOf(movement.minReps.toFloat(), movement.maxReps.toFloat())
@@ -130,6 +152,7 @@ class MovementFragment : Fragment() {
                     name = movementName.text.toString(),
                     workoutTypes = selectWorkoutTypesChipGroup.checkedChipIds.map { chipId -> workoutTypes.find { it.id == chipId }!! }.toSet(),
                     setStructures = selectSetStructuresChipGroup.checkedChipIds.map { chipId -> SetStructure.values()[chipId] }.toSet(),
+                    repUnit = RepUnit.values()[repUnitChipGroup.checkedChipId],
                     minSets = setCountRangeSlider.values[0].toInt(),
                     maxSets = setCountRangeSlider.values[1].toInt(),
                     minReps = repCountRangeSlider.values[0].toInt(),
