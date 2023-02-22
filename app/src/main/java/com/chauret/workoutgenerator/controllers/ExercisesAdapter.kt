@@ -1,13 +1,12 @@
 package com.chauret.workoutgenerator.controllers
 
 import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.widget.*
 import com.chauret.workoutgenerator.R
+import com.chauret.workoutgenerator.model.movement.RepUnit
 import com.chauret.workoutgenerator.model.workout.Exercise
 
 class ExercisesAdapter(
@@ -50,6 +49,8 @@ class ExercisesAdapter(
             if (isFlat && it != flatRepCount) isFlat = false
             it
         }.joinToString(", ")
-        return if (isFlat) "${exercise.sets.size} x $flatRepCount" else enumeratedSetsText
+        val setsString = if (isFlat) "${exercise.sets.size} x $flatRepCount" else enumeratedSetsText
+        val repUnit = exercise.movement.repUnit
+        return if (repUnit == RepUnit.SECONDS) "$setsString sec" else setsString
     }
 }
