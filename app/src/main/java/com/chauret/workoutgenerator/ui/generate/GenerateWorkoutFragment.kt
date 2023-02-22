@@ -65,7 +65,8 @@ class GenerateWorkoutFragment : Fragment() {
             workoutTypeChip.isCheckable = true
             workoutTypeChip.checkedIcon = null
             when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-                Configuration.UI_MODE_NIGHT_YES -> {}
+                Configuration.UI_MODE_NIGHT_YES -> workoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
+                    R.color.chip_state_list_dark)
                 Configuration.UI_MODE_NIGHT_NO -> workoutTypeChip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(),
                     R.color.chip_state_list)
             }
