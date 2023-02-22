@@ -136,17 +136,41 @@ class MovementFragment : Fragment() {
             repUnitChipGroup.addView(repUnitChip)
         }
         repUnitChipGroup.isSelectionRequired = true
+        val selectedRepUnit = RepUnit.values()[repUnitChipGroup.checkedChipId]
 
         val repCountRangeSliderText: TextView = binding.repCountRangeSliderText
-        val selectedRepUnit = RepUnit.values()[repUnitChipGroup.checkedChipId]
         repCountRangeSliderText.text = "Min and Max " + selectedRepUnit.name[0] + selectedRepUnit.name.substring(1).lowercase()
+
+        val repCountRangeSlider: RangeSlider = binding.repCountRangeSlider
+        if (selectedRepUnit == RepUnit.SECONDS) {
+            repCountRangeSlider.valueFrom = 10F
+            repCountRangeSlider.valueTo = 200F
+            repCountRangeSlider.stepSize = 10F
+        } else {
+            repCountRangeSlider.valueFrom = 1F
+            repCountRangeSlider.valueTo = 20F
+            repCountRangeSlider.stepSize = 1F
+        }
+        repCountRangeSlider.values = listOf(movement.minReps.toFloat(), movement.maxReps.toFloat())
+
         repUnitChipGroup.setOnCheckedStateChangeListener { group, _ ->
             val repUnit = RepUnit.values()[group.checkedChipId]
             repCountRangeSliderText.text = "Min and Max " + repUnit.name[0] + repUnit.name.substring(1).lowercase()
-        }
 
-        val repCountRangeSlider: RangeSlider = binding.repCountRangeSlider
-        repCountRangeSlider.values = listOf(movement.minReps.toFloat(), movement.maxReps.toFloat())
+            val currValues = repCountRangeSlider.values
+            repCountRangeSlider.values = mutableListOf(10F, 10F)
+            if (repUnit == RepUnit.SECONDS) {
+                repCountRangeSlider.valueFrom = 10F
+                repCountRangeSlider.valueTo = 200F
+                repCountRangeSlider.stepSize = 10F
+                repCountRangeSlider.values = currValues.map { it * 10 }
+            } else {
+                repCountRangeSlider.valueFrom = 1F
+                repCountRangeSlider.valueTo = 20F
+                repCountRangeSlider.stepSize = 1F
+                repCountRangeSlider.values = currValues.map { it / 10 }
+            }
+        }
 
         val favoriteCheckbox: CheckBox = binding.favoriteCheckbox
         favoriteCheckbox.isChecked = movement.favorite ?: false
