@@ -73,7 +73,9 @@ class GenerateWorkoutFragment : Fragment() {
             selectWorkoutTypesChipGroup.addView(workoutTypeChip)
         }
         selectWorkoutTypesChipGroup.isSelectionRequired = true
-        selectWorkoutTypesChipGroup.check(workoutTypes.first().id)
+        if (selectWorkoutTypesChipGroup.checkedChipIds.isEmpty()) {
+            selectWorkoutTypesChipGroup.check(workoutTypes.first().id)
+        }
 
         val selectExercisesRangeSlider: RangeSlider = binding.selectExercisesRangeSlider
         selectExercisesRangeSlider.values = listOf(3f, 5f)
