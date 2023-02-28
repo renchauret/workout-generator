@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.chauret.workoutgenerator.controllers.WorkoutsAdapter
 import com.chauret.workoutgenerator.databinding.FragmentHistoryBinding
-import com.chauret.workoutgenerator.storage.WorkoutsDataStore
+import com.chauret.workoutgenerator.model.workout.Workout
+import com.chauret.workoutgenerator.storage.DataStore
+import com.chauret.workoutgenerator.storage.DataStoreFactory
 
 class HistoryFragment : Fragment() {
 
@@ -20,6 +22,8 @@ class HistoryFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private lateinit var workoutsDataStore: DataStore<Workout>
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,6 +31,8 @@ class HistoryFragment : Fragment() {
     ): View {
         val dashboardViewModel =
             ViewModelProvider(this).get(HistoryViewModel::class.java)
+
+        workoutsDataStore = DataStoreFactory.create(requireActivity(), Workout::class)
 
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
 
@@ -36,7 +42,7 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val workouts = WorkoutsDataStore.loadWorkouts(requireActivity())
+        val workouts = workoutsDataStore.load()
         val workoutsList: ListView = binding.workoutsList
         val workoutsAdapter = this.context?.let { WorkoutsAdapter(it, workouts.toList()) }
         workoutsList.adapter = workoutsAdapter

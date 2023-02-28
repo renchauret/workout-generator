@@ -1,10 +1,11 @@
 package com.chauret.workoutgenerator.model.movement
 
+import com.chauret.workoutgenerator.model.Entity
 import java.io.Serializable
 import java.util.UUID
 
 data class Movement (
-    val guid: UUID,
+    override val guid: UUID,
     // for Android UI
     val id: Long,
     val name: String,
@@ -16,4 +17,4 @@ data class Movement (
     val repUnit: RepUnit,
     val setStructures: Set<SetStructure>,
     val favorite: Boolean? = false
-): Serializable
+): Serializable, Entity

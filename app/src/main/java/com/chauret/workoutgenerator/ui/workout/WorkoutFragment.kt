@@ -16,8 +16,8 @@ import androidx.navigation.fragment.findNavController
 import com.chauret.workoutgenerator.controllers.ExercisesAdapter
 import com.chauret.workoutgenerator.databinding.FragmentWorkoutBinding
 import com.chauret.workoutgenerator.model.workout.Workout
-import com.chauret.workoutgenerator.storage.WorkoutsDataStore
-
+import com.chauret.workoutgenerator.storage.DataStore
+import com.chauret.workoutgenerator.storage.DataStoreFactory
 
 class WorkoutFragment : Fragment() {
 
@@ -30,6 +30,8 @@ class WorkoutFragment : Fragment() {
     private var editable: Boolean = false
     private var deletable: Boolean = false
 
+    private lateinit var workoutsDataStore: DataStore<Workout>
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,6 +39,8 @@ class WorkoutFragment : Fragment() {
     ): View {
         val workoutViewModel =
             ViewModelProvider(this)[WorkoutViewModel::class.java]
+
+        workoutsDataStore = DataStoreFactory.create(requireActivity(), Workout::class)
 
         _binding = FragmentWorkoutBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -67,7 +71,7 @@ class WorkoutFragment : Fragment() {
         val cancelButton: Button = binding.cancelButton
         if (editable) {
             confirmButton.setOnClickListener {
-                WorkoutsDataStore.saveWorkout(workout, requireActivity())
+                workoutsDataStore.save(workout)
                 findNavController().popBackStack()
             }
         } else {
@@ -81,7 +85,7 @@ class WorkoutFragment : Fragment() {
                     .setPositiveButton(
                         R.string.yes
                     ) { _, _ ->
-                        WorkoutsDataStore.deleteWorkout(workout.guid, requireActivity())
+                        workoutsDataStore.delete(workout.guid)
                         findNavController().popBackStack()
                     }
                     .setNegativeButton(R.string.no, null).show()
