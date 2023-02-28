@@ -18,7 +18,7 @@ class WorkoutsDataStore {
                 val workouts: Set<Workout> = ois.readObject() as Set<Workout>
                 fis.close()
                 ois.close()
-                return workouts
+                return workouts.sortedByDescending { it.timestampMillis }.toSet()
             } catch (e: Exception) {
                 println("workout_generator_workouts file not found, creating new")
             }
