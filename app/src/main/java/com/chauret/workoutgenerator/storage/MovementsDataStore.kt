@@ -13,6 +13,7 @@ import kotlin.random.Random
 class MovementsDataStore {
     companion object {
         private const val MOVEMENTS_FILENAME = "workout_generator_movements"
+        private val random: Random = Random(System.currentTimeMillis())
 
         fun loadMovements(context: Context): Set<Movement> {
             try {
@@ -29,7 +30,7 @@ class MovementsDataStore {
             val movements = setOf(
                 Movement(
                     guid = UUID.randomUUID(),
-                    id = Random.nextLong(0, Long.MAX_VALUE),
+                    id = random.nextLong(0, Long.MAX_VALUE),
                     name = "Bench press",
                     workoutTypes = setOf(
                         workoutTypes.find { it.name == "Chest" }!!,
@@ -49,7 +50,7 @@ class MovementsDataStore {
                 ),
                 Movement(
                     guid = UUID.randomUUID(),
-                    id = Random.nextLong(0, Long.MAX_VALUE),
+                    id = random.nextLong(0, Long.MAX_VALUE),
                     name = "Shoulder press",
                     workoutTypes = setOf(
                         workoutTypes.find { it.name == "Shoulders" }!!,
@@ -68,7 +69,7 @@ class MovementsDataStore {
                 ),
                 Movement(
                     guid = UUID.randomUUID(),
-                    id = Random.nextLong(0, Long.MAX_VALUE),
+                    id = random.nextLong(0, Long.MAX_VALUE),
                     name = "Squat",
                     workoutTypes = setOf(
                         workoutTypes.find { it.name == "Legs" }!!
@@ -86,7 +87,7 @@ class MovementsDataStore {
                 ),
                 Movement(
                     guid = UUID.randomUUID(),
-                    id = Random.nextLong(0, Long.MAX_VALUE),
+                    id = random.nextLong(0, Long.MAX_VALUE),
                     name = "EZ Bar Curls",
                     workoutTypes = setOf(
                         workoutTypes.find { it.name == "Arms" }!!
@@ -104,7 +105,7 @@ class MovementsDataStore {
                 ),
                 Movement(
                     guid = UUID.randomUUID(),
-                    id = Random.nextLong(0, Long.MAX_VALUE),
+                    id = random.nextLong(0, Long.MAX_VALUE),
                     name = "Triceps extensions",
                     workoutTypes = setOf(
                         workoutTypes.find { it.name == "Arms" }!!
@@ -123,7 +124,7 @@ class MovementsDataStore {
                 ),
                 Movement(
                     guid = UUID.randomUUID(),
-                    id = Random.nextLong(0, Long.MAX_VALUE),
+                    id = random.nextLong(0, Long.MAX_VALUE),
                     name = "Pull ups",
                     workoutTypes = setOf(
                         workoutTypes.find { it.name == "Back" }!!,

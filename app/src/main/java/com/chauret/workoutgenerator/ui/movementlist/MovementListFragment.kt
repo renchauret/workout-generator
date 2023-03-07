@@ -56,7 +56,7 @@ class MovementListFragment : Fragment() {
             val workoutTypes = WorkoutTypesDataStore.loadWorkoutTypes(requireActivity())
             val movement =  Movement(
                 guid = UUID.randomUUID(),
-                id = Random.nextLong(0, Long.MAX_VALUE),
+                id = Random(System.currentTimeMillis()).nextLong(0, Long.MAX_VALUE),
                 name = "Exercise name",
                 workoutTypes = setOf(
                     workoutTypes.first()

@@ -70,7 +70,7 @@ class WorkoutTypeListFragment : Fragment() {
                     if (name.isNotEmpty()) {
                         val workoutType = WorkoutType(
                             guid = UUID.randomUUID(),
-                            id = Random.nextInt(),
+                            id = Random(System.currentTimeMillis()).nextInt(),
                             name = editText.text.toString()
                         )
                         WorkoutTypesDataStore.saveWorkoutType(

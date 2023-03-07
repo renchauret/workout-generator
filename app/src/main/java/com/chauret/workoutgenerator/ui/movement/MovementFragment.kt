@@ -80,7 +80,7 @@ class MovementFragment : Fragment() {
             selectWorkoutTypesChipGroup.addView(workoutTypeChip)
         }
         val addWorkoutTypeChip = Chip(this.context)
-        addWorkoutTypeChip.id = Random.nextInt(0, Int.MAX_VALUE)
+        addWorkoutTypeChip.id = Random(System.currentTimeMillis()).nextInt(0, Int.MAX_VALUE)
         addWorkoutTypeChip.text = "+ / -"
         addWorkoutTypeChip.isCheckable = false
         addWorkoutTypeChip.checkedIcon = null

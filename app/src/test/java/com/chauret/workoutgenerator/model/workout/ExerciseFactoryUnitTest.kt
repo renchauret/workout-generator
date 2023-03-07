@@ -16,9 +16,9 @@ class ExerciseFactoryUnitTest {
         val numSets = 5
         val minReps = 2
         val maxReps = 8
-        val method = ExerciseFactory.Companion::class.java.getDeclaredMethod("createFlatSets", Int::class.java, Int::class.java, Int::class.java)
+        val method = ExerciseFactory.Companion::class.java.getDeclaredMethod("createFlatSets", Int::class.java, Int::class.java, Int::class.java, Int::class.java)
         method.isAccessible = true
-        val params = arrayOf(numSets, minReps, maxReps)
+        val params = arrayOf(numSets, minReps, maxReps, 1)
         val sets: List<Int> = method.invoke(ExerciseFactory.Companion, *params) as List<Int>
         assert(sets.size == numSets)
         assert(sets.distinct().count() == 1)
@@ -30,9 +30,9 @@ class ExerciseFactoryUnitTest {
         val numSets = 5
         val minReps = 2
         val maxReps = 8
-        val method = ExerciseFactory.Companion::class.java.getDeclaredMethod("createRandomSets", Int::class.java, Int::class.java, Int::class.java)
+        val method = ExerciseFactory.Companion::class.java.getDeclaredMethod("createRandomSets", Int::class.java, Int::class.java, Int::class.java, Int::class.java)
         method.isAccessible = true
-        val params = arrayOf(numSets, minReps, maxReps)
+        val params = arrayOf(numSets, minReps, maxReps, 1)
         val sets: List<Int> = method.invoke(ExerciseFactory.Companion, *params) as List<Int>
         assert(sets.size == numSets)
         sets.forEach { assert(it in minReps..maxReps) }
@@ -44,9 +44,9 @@ class ExerciseFactoryUnitTest {
         val numSets = 5
         val minReps = 2
         val maxReps = 8
-        val method = ExerciseFactory.Companion::class.java.getDeclaredMethod("createDescendingSets", Int::class.java, Int::class.java, Int::class.java)
+        val method = ExerciseFactory.Companion::class.java.getDeclaredMethod("createDescendingSets", Int::class.java, Int::class.java, Int::class.java, Int::class.java)
         method.isAccessible = true
-        val params = arrayOf(numSets, minReps, maxReps)
+        val params = arrayOf(numSets, minReps, maxReps, 1)
         val sets: List<Int> = method.invoke(ExerciseFactory.Companion, *params) as List<Int>
         assert(sets.size == numSets)
         for (i in sets.indices) {
@@ -62,9 +62,9 @@ class ExerciseFactoryUnitTest {
         val numSets = 5
         val minReps = 2
         val maxReps = 8
-        val method = ExerciseFactory.Companion::class.java.getDeclaredMethod("createPyramidSets", Int::class.java, Int::class.java, Int::class.java)
+        val method = ExerciseFactory.Companion::class.java.getDeclaredMethod("createPyramidSets", Int::class.java, Int::class.java, Int::class.java, Int::class.java)
         method.isAccessible = true
-        val params = arrayOf(numSets, minReps, maxReps)
+        val params = arrayOf(numSets, minReps, maxReps, 1)
         val sets: List<Int> = method.invoke(ExerciseFactory.Companion, *params) as List<Int>
         assert(sets.size == numSets)
         for (i in sets.indices) {

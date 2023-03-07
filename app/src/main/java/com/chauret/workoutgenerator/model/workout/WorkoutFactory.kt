@@ -7,10 +7,12 @@ import kotlin.random.Random
 
 class WorkoutFactory {
     companion object {
+        private val random: Random = Random(System.currentTimeMillis())
+
         fun createWorkout(config: WorkoutConfig, possibleMovements: List<Movement>): Workout {
             return Workout(
                 guid = UUID.randomUUID(),
-                id = Random.nextLong(0, Long.MAX_VALUE),
+                id = random.nextLong(0, Long.MAX_VALUE),
                 config = config,
                 exercises = createExercises(config, possibleMovements),
                 timestampMillis = System.currentTimeMillis()
@@ -21,7 +23,7 @@ class WorkoutFactory {
             val legalMovements: MutableSet<Movement> = possibleMovements.filter {
                 it.workoutTypes.intersect(config.workoutTypes).isNotEmpty()
             }.toMutableSet()
-            val numExercises = (minOf(config.minExercises, legalMovements.size)..minOf(config.maxExercises, legalMovements.size)).random()
+            val numExercises = (minOf(config.minExercises, legalMovements.size)..minOf(config.maxExercises, legalMovements.size)).random(random)
             return (0 until numExercises).map {
                 val weightedIndices = mutableListOf<Int>()
                 legalMovements.forEachIndexed { index, movement ->
@@ -30,7 +32,7 @@ class WorkoutFactory {
                     weightedIndices.add(index)
                     weightedIndices.add(index)
                 }
-                val index = weightedIndices.random()
+                val index = weightedIndices.random(random)
                 val movement = legalMovements.elementAt(index)
                 legalMovements.remove(movement)
                 ExerciseFactory.createExercise(movement)

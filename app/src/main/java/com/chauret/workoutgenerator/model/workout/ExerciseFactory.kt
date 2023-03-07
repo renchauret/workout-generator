@@ -9,19 +9,21 @@ import kotlin.random.Random
 
 class ExerciseFactory {
     companion object {
+        private val random: Random = Random(System.currentTimeMillis())
+
         fun createExercise(movement: Movement): Exercise {
             return Exercise(
                 guid = UUID.randomUUID(),
-                id = Random.nextLong(0, Long.MAX_VALUE),
+                id = random.nextLong(0, Long.MAX_VALUE),
                 movement = movement,
                 sets = createSets(movement)
             )
         }
 
         private fun createSets(movement: Movement): List<Int> {
-            val numSets = (movement.minSets..movement.maxSets).random()
+            val numSets = (movement.minSets..movement.maxSets).random(random)
             val step = if (movement.repUnit == RepUnit.SECONDS) 10 else 1
-            return when (movement.setStructures.random()) {
+            return when (movement.setStructures.random(random)) {
                 SetStructure.PYRAMID -> createPyramidSets(
                     numSets,
                     movement.minReps,
@@ -50,12 +52,12 @@ class ExerciseFactory {
         }
 
         private fun createFlatSets(numSets: Int, minReps: Int, maxReps: Int, step: Int = 1): List<Int> {
-            val reps = (minReps..maxReps step step).toList().random()
+            val reps = (minReps..maxReps step step).toList().random(random)
             return List(numSets) { reps }
         }
 
         private fun createRandomSets(numSets: Int, minReps: Int, maxReps: Int, step: Int = 1): List<Int> {
-            return List(numSets) { (minReps..maxReps step step).toList().random() }
+            return List(numSets) { (minReps..maxReps step step).toList().random(random) }
         }
 
         private fun createDescendingSets(numSets: Int, minReps: Int, maxReps: Int, step: Int = 1): List<Int> {
@@ -64,7 +66,7 @@ class ExerciseFactory {
                 val thisMax: Int = ((maxReps - (finalStep * it)) / step).roundToInt() * step
                 val thisMin: Int =
                     if (thisMax == minReps) minReps else ((maxReps - (finalStep * (it + 1))) / step).roundToInt() * step
-                (thisMin..thisMax step step).toList().random()
+                (thisMin..thisMax step step).toList().random(random)
             }
         }
 
@@ -78,7 +80,7 @@ class ExerciseFactory {
                 val thisMax: Int = ((maxReps - (finalStep * stepMultiplier)) / step).roundToInt() * step
                 val thisMin: Int =
                     if (thisMax == minReps) minReps else ((maxReps - (finalStep * (stepMultiplier + 1))) / step).roundToInt() * step
-                (thisMin..thisMax step step).toList().random()
+                (thisMin..thisMax step step).toList().random(random)
             }
         }
     }

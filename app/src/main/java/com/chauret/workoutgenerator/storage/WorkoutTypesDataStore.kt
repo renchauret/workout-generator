@@ -11,6 +11,7 @@ import kotlin.random.Random
 class WorkoutTypesDataStore {
     companion object {
         private const val WORKOUT_TYPES_FILENAME = "workout_generator_workout_types"
+        private val random: Random = Random(System.currentTimeMillis())
 
         fun loadWorkoutTypes(context: Context): Set<WorkoutType> {
             try {
@@ -24,11 +25,11 @@ class WorkoutTypesDataStore {
                 println("workout_generator_workout_types file not found, creating new")
             }
             val workoutTypes = setOf(
-                WorkoutType(UUID.randomUUID(), Random.nextInt(0, Int.MAX_VALUE), "Chest"),
-                WorkoutType(UUID.randomUUID(), Random.nextInt(0, Int.MAX_VALUE), "Shoulders"),
-                WorkoutType(UUID.randomUUID(), Random.nextInt(0, Int.MAX_VALUE), "Back"),
-                WorkoutType(UUID.randomUUID(), Random.nextInt(0, Int.MAX_VALUE), "Legs"),
-                WorkoutType(UUID.randomUUID(), Random.nextInt(0, Int.MAX_VALUE), "Arms")
+                WorkoutType(UUID.randomUUID(), random.nextInt(0, Int.MAX_VALUE), "Chest"),
+                WorkoutType(UUID.randomUUID(), random.nextInt(0, Int.MAX_VALUE), "Shoulders"),
+                WorkoutType(UUID.randomUUID(), random.nextInt(0, Int.MAX_VALUE), "Back"),
+                WorkoutType(UUID.randomUUID(), random.nextInt(0, Int.MAX_VALUE), "Legs"),
+                WorkoutType(UUID.randomUUID(), random.nextInt(0, Int.MAX_VALUE), "Arms")
             )
             saveWorkoutTypes(workoutTypes, context)
             return workoutTypes
