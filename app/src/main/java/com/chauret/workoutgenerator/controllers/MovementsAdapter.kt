@@ -38,8 +38,7 @@ class MovementsAdapter(
 
         // Handle TextView and display string from your list
         val workoutTypesTextView = view.findViewById<TextView>(R.id.workoutTypes)
-        val workoutTypesToShow = movement.workoutTypes.filterIndexed { i, _ -> i < 2 }
-        workoutTypesTextView.text = workoutTypesToShow.joinToString(", ") + if (movement.workoutTypes.size > 2) "..." else ""
+        workoutTypesTextView.text = movement.workoutTypes.joinToString(", ")
 
         view.setOnClickListener {
             val bundle = bundleOf("movement" to movement, "editable" to true, "deletable" to true)
