@@ -5,6 +5,7 @@
     android:id="@+id/workoutFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="12dp"
     tools:context=".ui.movement.MovementFragment">
 
     <com.google.android.material.textfield.TextInputEditText
