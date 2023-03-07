@@ -10,20 +10,25 @@
 
     <TextView
         android:id="@+id/movementName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="1"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:text="Shoulder press"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/workoutTypes"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
         android:id="@+id/workoutTypes"
         android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="1"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="8dp"
@@ -32,10 +37,11 @@
         android:textAlignment="textEnd"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="Chest, Shoulders, Triceps, Biceps, Back, Legs, Abs, Cardio"
+        android:text="Chest, Shoulders"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@id/movementName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
